@@ -10,8 +10,9 @@ import { Usuario } from '../models/usuario';
 
 export class UsuarioService {
 
-  private readonly apiUrl = 'http://localhost:8080/usuarios';
-
+  //private readonly apiUrl = 'http://localhost:8080/usuarios';
+  private readonly apiUrl = 'https://api-sgr.onrender.com/usuarios';
+  
   constructor(private http: HttpClient) { }
 
   listar(): Observable<Usuario[]> {

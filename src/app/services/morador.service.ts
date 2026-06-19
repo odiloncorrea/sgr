@@ -9,7 +9,9 @@ import { Morador } from '../models/morador';
 })
 export class MoradorService {
 
-  private readonly apiUrl = 'http://localhost:8080/moradores';
+  //  private readonly apiUrl = 'http://localhost:8080/moradores';
+  private readonly apiUrl = 'https://api-sgr.onrender.com/moradores';
+
 
   constructor(private http: HttpClient) { }
 
@@ -23,10 +25,10 @@ export class MoradorService {
 
   salvar(morador: Morador): Observable<Morador> {
     if (morador.id) {
-        return this.http.put<Morador>(`${this.apiUrl}/${morador.id}`, morador);
+      return this.http.put<Morador>(`${this.apiUrl}/${morador.id}`, morador);
     }
-    
-    return this.http.post<Morador>( this.apiUrl, morador);
+
+    return this.http.post<Morador>(this.apiUrl, morador);
   }
 
   excluir(id: string): Observable<void> {

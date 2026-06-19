@@ -8,8 +8,9 @@ import { Autenticacao } from '../models/autenticacao';
   providedIn: 'root',
 })
 export class AutenticacaoService {
-  
-private readonly apiUrl = 'http://localhost:8080/login';
+
+  //private readonly apiUrl = 'http://localhost:8080/login';
+  private readonly apiUrl = 'https://api-sgr.onrender.com/login';
 
   constructor(private http: HttpClient) { }
 

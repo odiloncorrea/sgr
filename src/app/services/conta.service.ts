@@ -9,7 +9,8 @@ import { Conta } from '../models/conta';
 })
 export class ContaService {
 
-  private readonly apiUrl = 'http://localhost:8080/contas';
+  //private readonly apiUrl = 'http://localhost:8080/contas';
+  private readonly apiUrl = 'https://api-sgr.onrender.com/contas';
 
   constructor(private http: HttpClient) { }
 
