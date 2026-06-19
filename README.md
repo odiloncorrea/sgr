@@ -1,96 +1,46 @@
-# Sistema de Gerenciamento de República (SGR)
+# Sistema de Gerenciamento de República (SGR) - Front-end
 
 ## Sobre o Projeto
 
-O Sistema de Gerenciamento de República (SGR) é uma aplicação web desenvolvida para auxiliar na administração financeira de repúblicas estudantis. O sistema permite o cadastro de moradores, registro de despesas, realização de rateios, emissão de extratos e acompanhamento dos gastos da república.
+O Sistema de Gerenciamento de República (SGR) é uma aplicação web desenvolvida para auxiliar na administração financeira de repúblicas estudantis. O sistema permite o cadastro de moradores, registro de despesas, realização de rateios, emissão de saldos, emissão de extratos e acompanhamento dos gastos da república.
 
-O projeto foi desenvolvido utilizando Spring Boot no back-end e Angular no front-end, seguindo uma arquitetura em camadas para facilitar a manutenção e evolução do sistema.
+Este repositório contém o front-end da aplicação, desenvolvido com Angular. A interface consome os dados disponibilizados pela API do SGR, implementada em Spring Boot.
 
 ## Tecnologias Utilizadas
-
-### Back-end
-
-* Java 21
-* Spring Boot
-* Spring Data JPA
-* Spring Validation
-* MySQL
-* Lombok
-* Swagger / OpenAPI
-
-### Front-end
 
 * Angular
 * TypeScript
 * Bootstrap
+* RxJS
+* Angular Router
+* Reactive Forms
+* Chart.js
 
 ## Funcionalidades
 
-### Moradores
-
-* Cadastro de moradores
-* Consulta de moradores
-* Alteração de moradores
-* Exclusão de moradores
-
-### Autenticação
-
-* Login de usuários
-* Controle de acesso ao sistema
-
-### Tipos de Conta
-
-* Cadastro de tipos de conta
-* Consulta de tipos de conta
-* Alteração de tipos de conta
-* Exclusão de tipos de conta
-
-### Contas
-
-* Cadastro de contas
-* Alteração de contas
-* Cancelamento de contas
-* Quitação de contas
-* Histórico de alterações
-
-### Rateio
-
-* Divisão de contas entre moradores
-* Controle da situação de pagamento de cada participante
-
-### Relatórios
-
+* Cadastro, consulta, alteração e exclusão de moradores
+* Autenticação de usuários
+* Cadastro, consulta, alteração e exclusão de tipos de conta
+* Cadastro, consulta, alteração, quitação e cancelamento de contas
+* Rateio de contas entre moradores
+* Replicação de contas
 * Emissão de saldo por morador
 * Emissão de extrato de contas
-
-### Dashboard
-
-* Contas pendentes
-* Gastos por tipo de conta
-* Gastos por morador
-* Total de contas pendentes
-
-## Modelo de Dados
-
-O sistema é composto pelas seguintes entidades:
-
-* Morador
-* TipoConta
-* Conta
-* Rateio
-* Historico
+* Painel de informações com contas pendentes, gráficos e totalizadores
 
 ## Estrutura do Projeto
 
 ```text
 src
-├── controllers
-├── services
-├── repositories
-├── entities
-├── dtos
-├── enums
-└── config
+├── app
+│   ├── components
+│   ├── guards
+│   ├── models
+│   ├── pipes
+│   ├── services
+│   ├── app.config.ts
+│   └── app.routes.ts
+└── assets
 ```
 
 ## Como Executar
@@ -98,40 +48,66 @@ src
 ### Clonar o Repositório
 
 ```bash
-git clone https://github.com/odiloncorrea/api-sgr.git
+git clone https://github.com/odiloncorrea/sgr.git
 ```
 
-### Configurar o Banco de Dados
+### Acessar a Pasta do Projeto
 
-Criar um banco de dados MySQL e ajustar as configurações no arquivo:
+```bash
+cd sgr
+```
 
-```properties
-application.properties
+### Instalar as Dependências
+
+```bash
+npm install
 ```
 
 ### Executar a Aplicação
 
 ```bash
-./mvnw spring-boot:run
+ng serve
 ```
 
-ou
-
-```bash
-mvn spring-boot:run
-```
-
-### Acessar a Documentação da API
+A aplicação estará disponível em:
 
 ```text
-http://localhost:8080/swagger-ui.html
+http://localhost:4200
+```
+
+## Integração com a API
+
+Antes de executar o front-end, certifique-se de que a API do SGR esteja em execução.
+
+Por padrão, o front-end consome a API em:
+
+```text
+http://localhost:8080
+```
+
+Caso necessário, altere a URL da API nos arquivos de serviço localizados em:
+
+```text
+src/app/services
 ```
 
 ## Requisitos
 
-* Java 21 ou superior
-* Maven 3.9+
-* MySQL 8+
+* Node.js
+* Angular CLI
+* API do SGR em execução
+
+## Repositório do Back-end
+
+```text
+https://github.com/odiloncorrea/api-sgr
+```
+
+## Status do Projeto
+
+✅ Projeto concluído
+
+Todos os requisitos funcionais e não funcionais definidos no documento de requisitos foram implementados.
 
 ## Autor
 
