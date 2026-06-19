@@ -1,59 +1,140 @@
-# Sgr
+# Sistema de Gerenciamento de República (SGR)
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.1.0.
+## Sobre o Projeto
 
-## Development server
+O Sistema de Gerenciamento de República (SGR) é uma aplicação web desenvolvida para auxiliar na administração financeira de repúblicas estudantis. O sistema permite o cadastro de moradores, registro de despesas, realização de rateios, emissão de extratos e acompanhamento dos gastos da república.
 
-To start a local development server, run:
+O projeto foi desenvolvido utilizando Spring Boot no back-end e Angular no front-end, seguindo uma arquitetura em camadas para facilitar a manutenção e evolução do sistema.
 
-```bash
-ng serve
+## Tecnologias Utilizadas
+
+### Back-end
+
+* Java 21
+* Spring Boot
+* Spring Data JPA
+* Spring Validation
+* MySQL
+* Lombok
+* Swagger / OpenAPI
+
+### Front-end
+
+* Angular
+* TypeScript
+* Bootstrap
+
+## Funcionalidades
+
+### Moradores
+
+* Cadastro de moradores
+* Consulta de moradores
+* Alteração de moradores
+* Exclusão de moradores
+
+### Autenticação
+
+* Login de usuários
+* Controle de acesso ao sistema
+
+### Tipos de Conta
+
+* Cadastro de tipos de conta
+* Consulta de tipos de conta
+* Alteração de tipos de conta
+* Exclusão de tipos de conta
+
+### Contas
+
+* Cadastro de contas
+* Alteração de contas
+* Cancelamento de contas
+* Quitação de contas
+* Histórico de alterações
+
+### Rateio
+
+* Divisão de contas entre moradores
+* Controle da situação de pagamento de cada participante
+
+### Relatórios
+
+* Emissão de saldo por morador
+* Emissão de extrato de contas
+
+### Dashboard
+
+* Contas pendentes
+* Gastos por tipo de conta
+* Gastos por morador
+* Total de contas pendentes
+
+## Modelo de Dados
+
+O sistema é composto pelas seguintes entidades:
+
+* Morador
+* TipoConta
+* Conta
+* Rateio
+* Historico
+
+## Estrutura do Projeto
+
+```text
+src
+├── controllers
+├── services
+├── repositories
+├── entities
+├── dtos
+├── enums
+└── config
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+## Como Executar
 
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+### Clonar o Repositório
 
 ```bash
-ng generate component component-name
+git clone https://github.com/odiloncorrea/api-sgr.git
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+### Configurar o Banco de Dados
+
+Criar um banco de dados MySQL e ajustar as configurações no arquivo:
+
+```properties
+application.properties
+```
+
+### Executar a Aplicação
 
 ```bash
-ng generate --help
+./mvnw spring-boot:run
 ```
 
-## Building
-
-To build the project run:
+ou
 
 ```bash
-ng build
+mvn spring-boot:run
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+### Acessar a Documentação da API
 
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
-
-```bash
-ng test
+```text
+http://localhost:8080/swagger-ui.html
 ```
 
-## Running end-to-end tests
+## Requisitos
 
-For end-to-end (e2e) testing, run:
+* Java 21 ou superior
+* Maven 3.9+
+* MySQL 8+
 
-```bash
-ng e2e
-```
+## Autor
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+Odilon Corrêa
 
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+Projeto desenvolvido como estudo de caso da disciplina de Desenvolvimento de Sistemas utilizando Angular e Spring Boot.
