@@ -1,0 +1,60 @@
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h2>Contas</h2>
+    <a class="btn btn-primary" routerLink="/contas/cadastrar">Nova</a>
+</div>
+
+@if (mensagemErro) {
+<div class="alert alert-danger">
+    {{ mensagemErro }}
+</div>
+}
+
+<div class="table-responsive">
+    <table class="table table-striped table-hover align-middle">
+        <thead class="table-dark">
+            <tr>
+                <th>Descrição</th>
+                <th>Vencimento</th>
+                <th>Valor</th>
+                <th>Situação</th>
+                <th>Tipo</th>
+                <th class="text-center">Ações</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @for (conta of contas; track conta.id) {
+            <tr>
+                <td>{{ conta.descricao }}</td>
+                <td>{{ conta.vencimento | date:'dd/MM/yyyy' }}</td>
+                <td>{{ conta.valor | currency:'BRL':'symbol':'1.2-2' }}</td>
+                <td>{{ conta.situacao }}</td>
+                <td>{{ conta.tipoDescricao }}</td>
+
+                <td class="text-center">
+                    <a class="btn btn-warning btn-sm me-2" [routerLink]="['/contas/alterar', conta.id]">
+                        Alterar
+                    </a>
+
+                    <button type="button" class="btn btn-danger btn-sm"
+                        [disabled]="conta.situacao === 'QUITADA' || conta.situacao === 'CANCELADA'"
+                        (click)="excluir(conta.id!)">
+                        Excluir
+                    </button>
+
+                    <a class="btn btn-info btn-sm ms-2" [routerLink]="['/contas/duplicar', conta.id]">
+                        Replicar
+                    </a>
+
+                </td>
+            </tr>
+            } @empty {
+            <tr>
+                <td colspan="6" class="text-center">
+                    Nenhuma conta cadastrada.
+                </td>
+            </tr>
+            }
+        </tbody>
+    </table>
+</div>

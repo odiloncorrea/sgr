@@ -1,0 +1,45 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+
+        <a class="navbar-brand" routerLink="/">SGR</a>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuPrincipal"
+            aria-controls="menuPrincipal" aria-expanded="false" aria-label="Alternar navegação">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="menuPrincipal">
+
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0 align-items-center">
+
+                @for (menu of menusPermitidos(); track menu.rota) {
+                <li class="nav-item">
+                    <a class="nav-link" [routerLink]="menu.rota">
+                        {{ menu.descricao }}
+                    </a>
+                </li>
+                }
+
+            </ul>
+
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-center">
+
+                @if (autenticacao) {
+                <li class="nav-item">
+                    <span class="navbar-text me-3 text-danger fw-bold">
+                        {{ primeiroNome() }}
+                    </span>
+                </li>
+
+                <li class="nav-item">
+                    <button type="button" class="btn btn-outline-danger btn-sm" (click)="sair()">
+                        Sair
+                    </button>
+                </li>
+                }
+
+            </ul>
+
+        </div>
+    </div>
+</nav>

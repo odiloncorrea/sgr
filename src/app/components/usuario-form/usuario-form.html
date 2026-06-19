@@ -1,0 +1,77 @@
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h2>Usuário</h2>
+    <a class="btn btn-secondary" routerLink="/usuarios">Voltar</a>
+</div>
+
+@if (mensagemErro) {
+<div class="alert alert-danger">
+    {{ mensagemErro }}
+</div>
+}
+
+<form [formGroup]="formUsuario" (ngSubmit)="salvar()">
+
+    <div class="row">
+        <div class="col-md-6 mb-3">
+            <label class="form-label">Login</label>
+            <input type="text" class="form-control" formControlName="login">
+
+            @if (validarCampo('login', 'required')) {
+            <div class="text-danger small">O login é obrigatório.</div>
+            }
+
+            @if (validarCampo('login', 'minlength')) {
+            <div class="text-danger small">O login deve ter no mínimo 3 caracteres.</div>
+            }
+        </div>
+
+        <div class="col-md-6 mb-3">
+            <label class="form-label">Senha</label>
+            <input type="password" class="form-control" formControlName="senha">
+
+            @if (validarCampo('senha', 'required')) {
+            <div class="text-danger small">A senha é obrigatória.</div>
+            }
+
+            @if (validarCampo('senha', 'minlength')) {
+            <div class="text-danger small">A senha deve ter no mínimo 3 caracteres.</div>
+            }
+        </div>
+
+    </div>
+
+    <div class="row">
+        <div class="col-md-6 mb-3">
+            <label class="form-label">Morador</label>
+            <select class="form-select" formControlName="moradorId">
+                <option value="">Selecione</option>
+                @for (morador of moradores; track morador.id) {
+                    <option [value]="morador.id">{{ morador.nome }}</option>
+                }
+            </select>
+
+            @if (validarCampo('moradorId', 'required')) {
+            <div class="text-danger small">O morador é obrigatório.</div>
+            }
+        </div>
+        <div class="col-md-6 mb-3">
+            <label class="form-label">Perfil</label>
+            <select class="form-select" formControlName="perfil">
+                <option value="">Selecione</option>
+                <option value="ADMIN">Administrador</option>
+                <option value="MORADOR">Morador</option>
+            </select>
+
+            @if (validarCampo('perfil', 'required')) {
+            <div class="text-danger small">O perfil é obrigatório.</div>
+            }
+        </div>        
+    </div>
+
+    <div class="d-flex justify-content-end mt-3">
+        <button type="submit" class="btn btn-success" [disabled]="formUsuario.invalid">
+            Salvar
+        </button>
+    </div>
+
+</form>

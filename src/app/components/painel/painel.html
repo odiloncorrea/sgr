@@ -1,0 +1,102 @@
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h2>Painel</h2>
+</div>
+
+@if (mensagemErro) {
+<div class="alert alert-danger">
+    {{ mensagemErro }}
+</div>
+}
+
+<div class="row align-items-end mb-4">
+
+    <div class="col-md-2 mb-3">
+        <label class="form-label">Mês</label>
+        <select class="form-select" [(ngModel)]="mes">
+            <option [value]="1">Janeiro</option>
+            <option [value]="2">Fevereiro</option>
+            <option [value]="3">Março</option>
+            <option [value]="4">Abril</option>
+            <option [value]="5">Maio</option>
+            <option [value]="6">Junho</option>
+            <option [value]="7">Julho</option>
+            <option [value]="8">Agosto</option>
+            <option [value]="9">Setembro</option>
+            <option [value]="10">Outubro</option>
+            <option [value]="11">Novembro</option>
+            <option [value]="12">Dezembro</option>
+        </select>
+    </div>
+
+    <div class="col-md-2 mb-3">
+        <label class="form-label">Ano</label>
+        <input type="number" class="form-control" [(ngModel)]="ano">
+    </div>
+
+    <div class="col-md-2 mb-3">
+        <button type="button" class="btn btn-primary w-100" (click)="consultar()">
+            Consultar
+        </button>
+    </div>
+
+</div>
+
+<div class="row mb-4">
+
+    <div class="col-md-6 mb-3">
+        <h5>Gastos por tipo</h5>
+
+        <div style="height: 300px;">
+            <canvas baseChart [data]="dadosGastosPorTipo" [type]="tipoGraficoBarra" [options]="opcoesGraficoBarra">
+            </canvas>
+        </div>
+    </div>
+
+    <div class="col-md-6 mb-3">
+        <h5>Gastos por morador</h5>
+
+        <div style="height: 300px;">
+            <canvas baseChart [data]="dadosGastosPorMorador" [type]="tipoGraficoPizza" [options]="opcoesGraficoPizza">
+            </canvas>
+        </div>
+    </div>
+
+</div>
+
+<h5>Contas pendentes</h5>
+
+<div class="table-responsive">
+    <table class="table table-striped table-hover align-middle">
+        <thead class="table-dark">
+            <tr>
+                <th>Tipo</th>
+                <th>Valor</th>
+                <th>Data Vencimento</th>
+                <th>Situação</th>
+                <th class="text-center">Ações</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @for (conta of contasPendentes; track conta.contaId) {
+            <tr>
+                <td>{{ conta.tipo }}</td>
+                <td>{{ conta.valor | currency:'BRL':'symbol':'1.2-2':'pt-BR' }}</td>
+                <td>{{ conta.vencimento | date:'dd/MM/yyyy' }}</td>
+                <td>{{ conta.situacao }}</td>
+                <td class="text-center">
+                    <a class="btn btn-info btn-sm" [routerLink]="['/contas/alterar', conta.contaId]">
+                        Detalhes
+                    </a>
+                </td>
+            </tr>
+            } @empty {
+            <tr>
+                <td colspan="5" class="text-center">
+                    Nenhuma conta pendente encontrada.
+                </td>
+            </tr>
+            }
+        </tbody>
+    </table>
+</div>

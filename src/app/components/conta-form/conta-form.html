@@ -1,0 +1,179 @@
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h2>
+        @if (duplicando) {
+            Duplicar Conta
+        } @else {
+            Conta
+        }
+    </h2>
+
+    <a class="btn btn-secondary" routerLink="/contas">Voltar</a>
+</div>
+
+@if (mensagemErro) {
+<div class="alert alert-danger"> {{ mensagemErro }} </div>
+}
+
+<form [formGroup]="formConta" (ngSubmit)="salvar()">
+
+    <div class="row">
+        <div class="col-md-8 mb-3">
+            <label class="form-label">Descrição</label>
+            <input type="text" class="form-control" formControlName="descricao">
+        </div>
+
+        <div class="col-md-4 mb-3">
+            <label class="form-label">Situação</label>
+            <select class="form-select" formControlName="situacao">
+                <option value="PENDENTE">Pendente</option>
+                <option value="QUITADA">Quitada</option>
+                <option value="CANCELADA">Cancelada</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4 mb-3">
+            <label class="form-label">Tipo da Conta</label>
+            <select class="form-select" formControlName="tipoContaId">
+                <option value="">Selecione</option>
+                @for (tipo of tipos; track tipo.id) {
+                    <option [value]="tipo.id">{{ tipo.descricao }}</option>
+                }
+            </select>
+        </div>
+
+        <div class="col-md-4 mb-3">
+            <label class="form-label">Morador Responsável</label>
+            <select class="form-select" formControlName="moradorResponsavelId">
+                <option value="">Selecione</option>
+                @for (morador of moradores; track morador.id) {
+                    <option [value]="morador.id">{{ morador.nome }}</option>
+                }
+            </select>
+        </div>
+
+        <div class="col-md-2 mb-3">
+            <label class="form-label">Valor</label>
+            <input type="text" class="form-control" formControlName="valor"
+                mask="separator.2" thousandSeparator="." decimalMarker=","
+                [dropSpecialCharacters]="false">
+        </div>
+
+        <div class="col-md-2 mb-3">
+            <label class="form-label">Vencimento</label>
+            <input type="date" class="form-control" formControlName="vencimento">
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12 mb-3">
+            <label class="form-label">Observação</label>
+            <textarea class="form-control" rows="4" formControlName="observacao"></textarea>
+        </div>
+    </div>
+
+    <hr>
+
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h4>Rateio</h4>
+
+        @if (!contaBloqueada()) {
+        <button type="button" class="btn btn-outline-secondary" (click)="ratearConta()">
+            Ratear conta
+        </button>
+        }
+    </div>
+
+    @if (!contaBloqueada()) {
+    <div [formGroup]="formRateio" class="row align-items-start mb-3">
+
+        <div class="col-md-5 mb-3">
+            <label class="form-label">Morador</label>
+            <select class="form-select" formControlName="moradorId">
+                <option value="">Selecione</option>
+                @for (morador of moradores; track morador.id) {
+                    <option [value]="morador.id">{{ morador.nome }}</option>
+                }
+            </select>
+
+            @if (validarCampoRateio('moradorId', 'required')) {
+            <div class="text-danger small">O morador é obrigatório.</div>
+            }
+        </div>
+
+        <div class="col-md-3 mb-3">
+            <label class="form-label">Valor</label>
+            <input type="text" class="form-control" formControlName="valor"
+                mask="separator.2" thousandSeparator="." decimalMarker=","
+                [dropSpecialCharacters]="false">
+
+            @if (validarCampoRateio('valor', 'required')) {
+            <div class="text-danger small">O valor é obrigatório.</div>
+            }
+        </div>
+
+        <div class="col-md-3 mb-3">
+            <label class="form-label">Situação</label>
+            <select class="form-select" formControlName="situacao">
+                <option value="EM_ABERTO">Em Aberto</option>
+                <option value="PAGO">Pago</option>
+            </select>
+        </div>
+
+        <div class="col-md-1 mb-3">
+            <label class="form-label d-block">&nbsp;</label>
+            <button type="button" class="btn btn-primary w-100" (click)="adicionarRateio()">
+                +
+            </button>
+        </div>
+
+    </div>
+    }
+
+    <div class="table-responsive">
+        <table class="table table-striped table-hover align-middle">
+            <thead class="table-dark">
+                <tr>
+                    <th>Morador</th>
+                    <th>Valor</th>
+                    <th>Situação</th>
+                    @if (!contaBloqueada()) {
+                    <th class="text-center">Ações</th>
+                    }
+                </tr>
+            </thead>
+
+            <tbody>
+                @for (rateio of rateios; track $index) {
+                <tr>
+                    <td>{{ rateio.moradorNome || buscarNomeMorador(rateio.moradorId) }}</td>
+                    <td>{{ rateio.valor | currency:'BRL':'symbol':'1.2-2':'pt-BR' }}</td>
+                    <td>{{ rateio.situacao }}</td>
+
+                    @if (!contaBloqueada()) {
+                    <td class="text-center">
+                        <button type="button" class="btn btn-danger btn-sm" (click)="removerRateio($index)">
+                            Excluir
+                        </button>
+                    </td>
+                    }
+                </tr>
+                } @empty {
+                <tr>
+                    <td colspan="4" class="text-center">
+                        Nenhum morador foi adicionado ao rateio.
+                    </td>
+                </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <div class="d-flex justify-content-end mt-3">
+        <button type="submit" class="btn btn-success" [disabled]="formConta.invalid">
+            Salvar
+        </button>
+    </div>
+
+</form>
